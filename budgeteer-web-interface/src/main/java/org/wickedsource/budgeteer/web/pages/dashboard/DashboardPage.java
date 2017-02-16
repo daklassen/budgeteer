@@ -1,17 +1,21 @@
 package org.wickedsource.budgeteer.web.pages.dashboard;
 
-
+import com.pingunaut.wicket.chartjs.core.panel.LineChartPanel;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
+import org.apache.wicket.model.Model;
 import org.wickedsource.budgeteer.web.BudgeteerSession;
 import org.wickedsource.budgeteer.web.Mount;
 import org.wickedsource.budgeteer.web.charts.BudgeteerChartTheme;
+import org.wickedsource.budgeteer.web.charts.ChartThemes;
+import org.wickedsource.budgeteer.web.charts.ChartUtils;
 import org.wickedsource.budgeteer.web.pages.base.basepage.BasePage;
 import org.wickedsource.budgeteer.web.pages.base.basepage.breadcrumbs.BreadcrumbsModel;
 import org.wickedsource.budgeteer.web.pages.budgets.overview.BudgetsOverviewPage;
 import org.wickedsource.budgeteer.web.pages.contract.overview.ContractOverviewPage;
 import org.wickedsource.budgeteer.web.pages.dashboard.burnedbudgetchart.BurnedBudgetChart;
 import org.wickedsource.budgeteer.web.pages.dashboard.burnedbudgetchart.BurnedBudgetChartModel;
+import org.wickedsource.budgeteer.web.pages.dashboard.dailyratechart.AverageDailyChartModelNEW;
 import org.wickedsource.budgeteer.web.pages.dashboard.dailyratechart.AverageDailyRateChart;
 import org.wickedsource.budgeteer.web.pages.dashboard.dailyratechart.AverageDailyRateChartModel;
 import org.wickedsource.budgeteer.web.pages.hours.HoursPage;
@@ -33,6 +37,18 @@ public class DashboardPage extends BasePage {
 
         AverageDailyRateChartModel avgDailyRateModel = new AverageDailyRateChartModel(BudgeteerSession.get().getProjectId(), 30);
         add(new AverageDailyRateChart("averageDailyRateChart", avgDailyRateModel, theme));
+
+
+
+
+
+        LineChartPanel lineChartPanel = new LineChartPanel("lineChart", Model.of(ChartThemes.getLineTheme()));
+        AverageDailyChartModelNEW avgDailyRateModelNEW = new AverageDailyChartModelNEW(BudgeteerSession.get().getProjectId(), 30);
+        add(ChartUtils.fillLineChartPanelWithContent(lineChartPanel, avgDailyRateModelNEW));
+
+
+
+
 
         add(new BookmarkablePageLink<PeopleOverviewPage>("peopleLink", PeopleOverviewPage.class));
 
