@@ -21,6 +21,9 @@ import org.wickedsource.budgeteer.web.pages.base.basepage.notifications.Notifica
 import org.wickedsource.budgeteer.web.pages.user.login.LoginPage;
 import org.wickedsource.budgeteer.web.pages.user.selectproject.SelectProjectPage;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+
 @NeedsLogin
 public abstract class BasePage extends WebPage {
     protected NotificationDropdown notificationDropdown;
@@ -72,7 +75,13 @@ public abstract class BasePage extends WebPage {
         return new Link(id) {
             @Override
             public void onClick() {
+                HttpServletRequest request = (HttpServletRequest) getRequestCycle().getRequest().getContainerRequest();
                 BudgeteerSession.get().logout();
+                try {
+                    request.logout();
+                } catch (ServletException e) {
+                    e.printStackTrace();
+                }
                 setResponsePage(LoginPage.class);
             }
         };
