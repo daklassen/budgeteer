@@ -5,6 +5,8 @@ import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.keycloak.KeycloakPrincipal;
+import org.keycloak.representations.AccessToken;
 import org.wickedsource.budgeteer.service.user.InvalidLoginCredentialsException;
 import org.wickedsource.budgeteer.service.user.User;
 import org.wickedsource.budgeteer.service.user.UserService;
@@ -14,6 +16,9 @@ import org.wickedsource.budgeteer.web.components.customFeedback.CustomFeedbackPa
 import org.wickedsource.budgeteer.web.pages.base.dialogpage.DialogPage;
 import org.wickedsource.budgeteer.web.pages.user.register.RegisterPage;
 import org.wickedsource.budgeteer.web.pages.user.selectproject.SelectProjectPage;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 
 import static org.wicketstuff.lazymodel.LazyModel.from;
 import static org.wicketstuff.lazymodel.LazyModel.model;
@@ -25,6 +30,17 @@ public class LoginPage extends DialogPage {
     private UserService userService;
 
     public LoginPage() {
+
+        HttpServletRequest request = (HttpServletRequest) getRequestCycle().getRequest().getContainerRequest();
+        AccessToken accessToken = ((KeycloakPrincipal) request.getUserPrincipal()).getKeycloakSecurityContext().getToken();
+        System.out.println("// TEST" );
+        System.out.println("// " + accessToken);
+        System.out.println("// " + accessToken.getId());
+        System.out.println("// " + accessToken.getFamilyName());
+        System.out.println("// " + accessToken.getClientSession());
+        System.out.println("// " + accessToken.getRealmAccess().getRoles());
+
+
         Form<LoginCredentials> form = new Form<LoginCredentials>("loginForm", model(from(new LoginCredentials()))) {
             @Override
             protected void onSubmit() {
