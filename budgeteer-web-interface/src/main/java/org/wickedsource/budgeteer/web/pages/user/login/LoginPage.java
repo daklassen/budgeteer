@@ -22,13 +22,6 @@ public class LoginPage extends DialogPage {
 
         HttpServletRequest request = (HttpServletRequest) getRequestCycle().getRequest().getContainerRequest();
         AccessToken accessToken = ((KeycloakPrincipal) request.getUserPrincipal()).getKeycloakSecurityContext().getToken();
-        System.out.println("// TEST" );
-        System.out.println("// " + accessToken);
-        System.out.println("// " + accessToken.getName());
-        System.out.println("// " + accessToken.getFamilyName());
-        System.out.println("// " + accessToken.getClientSession());
-        System.out.println("// " + accessToken.getRealmAccess().getRoles());
-
 
         User user = userService.login(accessToken.getName());
         BudgeteerSession.get().login(user);
