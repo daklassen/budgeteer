@@ -3,13 +3,12 @@ package org.wickedsource.budgeteer.web.pages.user.selectproject;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
 import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
-import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.RequiredTextField;
+import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.wickedsource.budgeteer.service.project.ProjectBaseData;
 import org.wickedsource.budgeteer.service.project.ProjectService;
@@ -17,11 +16,15 @@ import org.wickedsource.budgeteer.service.user.UserService;
 import org.wickedsource.budgeteer.web.BudgeteerSession;
 import org.wickedsource.budgeteer.web.Mount;
 import org.wickedsource.budgeteer.web.components.customFeedback.CustomFeedbackPanel;
-import org.wickedsource.budgeteer.web.pages.base.dialogpage.DialogPageWithBacklink;
+import org.wickedsource.budgeteer.web.pages.base.dialogpage.DialogPage;
 import org.wickedsource.budgeteer.web.pages.dashboard.DashboardPage;
+import org.wickedsource.budgeteer.web.pages.user.login.LoginPage;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 
 @Mount("/selectProject")
-public class SelectProjectPage extends DialogPageWithBacklink {
+public class SelectProjectPage extends DialogPage {
 
     @SpringBean
     private ProjectService projectService;
@@ -31,10 +34,8 @@ public class SelectProjectPage extends DialogPageWithBacklink {
 
     private CustomFeedbackPanel feedbackPanel;
 
-    public SelectProjectPage(Class<? extends WebPage> backlinkPage, PageParameters backlinkParameters) {
-        super(backlinkPage, backlinkParameters);
-        add(createBacklink("backlink1"));
-        add(createBacklink("backlink2"));
+    public SelectProjectPage() {
+        add(createLogoutLink("logoutLink"));
         add(createNewProjectForm("newProjectForm"));
         add(createChooseProjectForm("chooseProjectForm"));
         Form feedbackForm = new Form("feedbackForm", new Model<String>());
@@ -102,6 +103,22 @@ public class SelectProjectPage extends DialogPageWithBacklink {
         form.add(markProjectAsDefault);
         form.add(goButton);
         return form;
+    }
+
+    private Link createLogoutLink(String id) {
+        return new Link(id) {
+            @Override
+            public void onClick() {
+                HttpServletRequest request = (HttpServletRequest) getRequestCycle().getRequest().getContainerRequest();
+                BudgeteerSession.get().logout();
+                try {
+                    request.logout();
+                } catch (ServletException e) {
+                    e.printStackTrace();
+                }
+                setResponsePage(LoginPage.class);
+            }
+        };
     }
 
 }

@@ -8,9 +8,6 @@ import java.util.List;
 
 public interface UserRepository extends CrudRepository<UserEntity, Long> {
 
-    @Query("select u from UserEntity u where u.name = :name and u.password = :password")
-    public UserEntity findByNameAndPassword(@Param("name") String name, @Param("password") String password);
-
     @Query("select u from UserEntity u where u.name = :name")
     public UserEntity findByName(@Param("name") String name);
 

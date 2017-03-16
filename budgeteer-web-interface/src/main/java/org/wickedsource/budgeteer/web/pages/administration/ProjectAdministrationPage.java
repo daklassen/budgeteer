@@ -104,7 +104,7 @@ public class ProjectAdministrationPage extends BasePage {
             @Override
             public void onClick() {
                 projectService.deleteProject(BudgeteerSession.get().getProjectId());
-                SelectProjectPage page = new SelectProjectPage(LoginPage.class, new PageParameters());
+                SelectProjectPage page = new SelectProjectPage();
                 setResponsePage(page);
             }
         };

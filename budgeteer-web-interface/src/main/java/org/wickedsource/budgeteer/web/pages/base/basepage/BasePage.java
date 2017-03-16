@@ -65,7 +65,7 @@ public abstract class BasePage extends WebPage {
         return new Link(id) {
             @Override
             public void onClick() {
-                SelectProjectPage page = new SelectProjectPage(LoginPage.class, new PageParameters());
+                SelectProjectPage page = new SelectProjectPage();
                 setResponsePage(page);
             }
         };

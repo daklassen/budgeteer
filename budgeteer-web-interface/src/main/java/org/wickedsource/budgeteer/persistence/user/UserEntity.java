@@ -24,9 +24,6 @@ public class UserEntity {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false, length = 512)
-    private String password;
-
     @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToMany(mappedBy = "authorizedUsers")
     private List<ProjectEntity> authorizedProjects = new ArrayList<ProjectEntity>();

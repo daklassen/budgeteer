@@ -22,9 +22,6 @@ public class UserService {
     private ProjectRepository projectRepository;
 
     @Autowired
-    private PasswordHasher passwordHasher;
-
-    @Autowired
     private UserMapper mapper;
 
     /**
@@ -85,37 +82,20 @@ public class UserService {
         project.getAuthorizedUsers().add(user);
     }
 
-    /**
-     * Checks a users login credentials.
-     *
-     * @param username username of the user to login
-     * @param password plain text password of the user to login
-     * @return a User object of the logged in user on successful login.
-     * @throws InvalidLoginCredentialsException in case of invalid credentials
-     */
-    public User login(String username, String password) throws InvalidLoginCredentialsException {
-        UserEntity entity = userRepository.findByNameAndPassword(username, passwordHasher.hash(password));
+    public User login(String username) {
+        UserEntity entity = userRepository.findByName(username);
         if (entity == null) {
-            throw new InvalidLoginCredentialsException();
+            // register on first login
+            registerUser(username);
+            entity = userRepository.findByName(username);
         }
+
         return mapper.map(entity);
     }
 
-    /**
-     * Registers a new user to the Budgeteer application.
-     * If the chosen username is already in-use, an UsernameAlreadyInUseException is thrown.
-     *
-     * @param username the users name
-     * @param password the users password
-     */
-    public void registerUser(String username, String password) throws UsernameAlreadyInUseException {
-        if(userRepository.findByName(username) == null) {
-            UserEntity user = new UserEntity();
-            user.setName(username);
-            user.setPassword(passwordHasher.hash(password));
-            userRepository.save(user);
-        } else {
-            throw new UsernameAlreadyInUseException();
-        }
+    public void registerUser(String username){
+        UserEntity user = new UserEntity();
+        user.setName(username);
+        userRepository.save(user);
     }
 }
