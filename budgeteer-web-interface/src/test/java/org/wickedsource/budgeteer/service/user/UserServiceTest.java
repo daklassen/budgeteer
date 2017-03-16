@@ -32,28 +32,15 @@ public class UserServiceTest extends ServiceTestTemplate{
 
     @Test
     public void testRegisterUser() throws Exception{
-        service.registerUser("User", "Password");
+        service.registerUser("User");
         verify(userRepository, times(1)).save(any(UserEntity.class));
-    }
-
-    @Test(expected = UsernameAlreadyInUseException.class)
-    public void testDuplicateUsernameDuringRegistration() throws Exception{
-        when(userRepository.findByName("User")).thenReturn(null, new UserEntity());
-        service.registerUser("User", "Password");
-        service.registerUser("User", "Password");
     }
 
     @Test
     public void testLoginSuccess() throws Exception {
-        when(userRepository.findByNameAndPassword("user", passwordHasher.hash("password"))).thenReturn(createUserEntity());
-        User user = service.login("user", "password");
+        when(userRepository.findByName("user")).thenReturn(createUserEntity());
+        User user = service.login("user");
         Assert.assertNotNull(user);
-    }
-
-    @Test(expected = InvalidLoginCredentialsException.class)
-    public void testLoginFail() throws Exception {
-        when(userRepository.findByNameAndPassword("user", passwordHasher.hash("password"))).thenReturn(null);
-        service.login("user", "password");
     }
 
     @Test
@@ -116,7 +103,6 @@ public class UserServiceTest extends ServiceTestTemplate{
         UserEntity user = new UserEntity();
         user.setId(1l);
         user.setName("user");
-        user.setPassword(passwordHasher.hash("password"));
         user.setAuthorizedProjects(new ArrayList<ProjectEntity>());
         return user;
     }

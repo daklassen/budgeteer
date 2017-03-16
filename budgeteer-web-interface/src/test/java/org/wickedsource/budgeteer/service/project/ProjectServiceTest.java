@@ -44,7 +44,6 @@ public class ProjectServiceTest extends ServiceTestTemplate {
         UserEntity user = new UserEntity();
         user.setId(1l);
         user.setName("user");
-        user.setPassword("password");
         user.getAuthorizedProjects().add(createProjectEntity());
         user.getAuthorizedProjects().add(createProjectEntity());
         return user;
