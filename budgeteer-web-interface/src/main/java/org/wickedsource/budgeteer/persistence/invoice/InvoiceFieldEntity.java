@@ -13,7 +13,7 @@ public class InvoiceFieldEntity implements Serializable {
 
     @Id
     @SequenceGenerator(name="SEQ_INVOICE_FIELD_ID", sequenceName="SEQ_INVOICE_FIELD_ID")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_INVOICE_FIELD_ID")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "SEQ_INVOICE_FIELD_ID")
     private long id;
 
     @ManyToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})

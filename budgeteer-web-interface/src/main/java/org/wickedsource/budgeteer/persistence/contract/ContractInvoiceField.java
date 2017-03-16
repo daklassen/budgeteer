@@ -21,7 +21,7 @@ import java.io.Serializable;
 public class ContractInvoiceField implements Serializable{
     @Id
     @SequenceGenerator(name="SEQ_Contract_Invoice_field_ID", sequenceName="SEQ_Contract_Invoice_field_ID")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_Contract_Invoice_field_ID")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "SEQ_Contract_Invoice_field_ID")
     private long id;
 
     @Column(name="FIELD_NAME", nullable = false)

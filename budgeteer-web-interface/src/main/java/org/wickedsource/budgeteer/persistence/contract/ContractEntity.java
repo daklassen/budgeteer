@@ -25,7 +25,7 @@ public class ContractEntity implements Serializable {
 
     @Id
     @SequenceGenerator(name="SEQ_CONTRACT_ID", sequenceName="SEQ_CONTRACT_ID")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_CONTRACT_ID")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "SEQ_CONTRACT_ID")
     private long id;
 
     @Column(name="CONTRACT_NAME", nullable = false)

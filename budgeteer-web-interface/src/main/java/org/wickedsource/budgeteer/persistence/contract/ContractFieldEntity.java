@@ -15,7 +15,7 @@ public class ContractFieldEntity implements Serializable{
 
     @Id
     @SequenceGenerator(name="SEQ_CONTRACT_FIELD_ID", sequenceName="SEQ_CONTRACT_FIELD_ID")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_CONTRACT_FIELD_ID")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "SEQ_CONTRACT_FIELD_ID")
     private long id;
 
     @ManyToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})

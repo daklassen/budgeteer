@@ -145,12 +145,23 @@ bootRun {
             '-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=9009',
             '-Dserver.port=9000',
             '-Dwicket.configurationType=DEVELOPMENT',
-            '-Dspring.datasource.url=jdbc:hsqldb:file:../../database/budgeteer;shutdown=true;hsqldb.write_delay=false;',
-            //'-Dspring.datasource.url=jdbc:hsqldb:mem:budgeteer',
+            //'-Dspring.datasource.url=jdbc:hsqldb:file:../../database/budgeteer;shutdown=true;hsqldb.write_delay=false;',
+            '-Dspring.datasource.url=jdbc:mysql://localhost:3306/budgeteer',
+            '-Dspring.datasource.driverClassName=com.mysql.jdbc.Driver',
+            '-Dspring.datasource.username=root',
+            '-Dspring.datasource.password=admin',
+            '-Dspring.jpa.hibernate.ddl-auto=update'
+
+    /*jvmArgs '-Xdebug',
+            '-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=9009',
+            '-Dserver.port=8080',
+            '-Dwicket.configurationType=DEVELOPMENT',
+            //'-Dspring.datasource.url=jdbc:hsqldb:file:../../database/budgeteer;shutdown=true;hsqldb.write_delay=false;',
+            '-Dspring.datasource.url=jdbc:hsqldb:mem:budgeteer',
             '-Dspring.datasource.driverClassName=org.hsqldb.jdbcDriver',
             '-Dspring.datasource.username=sa',
             '-Dspring.datasource.password=',
-            '-Dspring.jpa.hibernate.ddl-auto=update'
+            '-Dspring.jpa.hibernate.ddl-auto=update'*/
 }
 
 idea {

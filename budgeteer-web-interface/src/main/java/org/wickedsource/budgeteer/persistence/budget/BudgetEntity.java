@@ -26,7 +26,7 @@ public class BudgetEntity {
 
     @Id
     @SequenceGenerator(name="SEQ_BUDGET_ID", sequenceName="SEQ_BUDGET_ID")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_BUDGET_ID")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "SEQ_BUDGET_ID")
     private long id;
 
     @Column(nullable = false)
